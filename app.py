@@ -3,6 +3,7 @@ from flask_wtf.csrf import CSRFProtect
 from database.mongoDb import DatabaseConnection
 from controllers.indexController import index_bp
 from controllers.userController import user_bp
+from controllers.errorController import error_bp
 from dotenv import load_dotenv
 import os
 
@@ -24,7 +25,7 @@ def after_request(response):
     return response
 
 # -- Rutas BluePrint --
-
+app.register_blueprint(error_bp)
 app.register_blueprint(index_bp)
 app.register_blueprint(user_bp)
 
