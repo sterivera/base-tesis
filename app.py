@@ -5,6 +5,7 @@ from controllers.indexController import index_bp
 from controllers.userController import user_bp
 from controllers.errorController import error_bp
 from dotenv import load_dotenv
+from commands.adminCommands import seed_admin_command
 import os
 
 load_dotenv()
@@ -28,6 +29,9 @@ def after_request(response):
 app.register_blueprint(error_bp)
 app.register_blueprint(index_bp)
 app.register_blueprint(user_bp)
+
+#-- Comandos CLI--
+app.cli.add_command(seed_admin_command)
 
 # -- Ejecución --
 
