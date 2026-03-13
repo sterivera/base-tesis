@@ -31,10 +31,10 @@ def register():
         result = UserService.create_user(identification,first_name,last_name,email,password)
 
         if(result['success']):
-            print(f"Creado correctamente {result['message']}")
+            flash(result['message'], 'success')
             return redirect(url_for('index.indexRoute'))
         else:
-            print("Existe un error")
+            flash(result['message'], 'danger')
             return render_template('/views/users/register.html')
 
 @user_bp.route('/login', methods=['GET', 'POST']) # /users/login

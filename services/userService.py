@@ -4,6 +4,7 @@ from models.personModel import PersonModel
 from werkzeug.security import generate_password_hash, check_password_hash
 from repositories.userRepository import UserRepository
 from repositories.personRepository import PersonRepository
+from utils.userUtil import validate_registration_data, validate_login_data
 
 class UserService:
     #Servicio con lógica de negocio para los usuarios
@@ -11,6 +12,14 @@ class UserService:
     @staticmethod
     def create_user(identification: str, first_name: str, last_name: str, email: str, password: str) -> Dict:
         # Crea un nuevo usuario con validaciones
+
+        errors = validate_registration_data(identification, first_name, last_name, email, password)
+
+        if errors:
+            return {
+                "success": False,
+                "message": ", ".join(errors)
+            }
 
         user_id = None
         
@@ -93,6 +102,14 @@ class UserService:
     @staticmethod
     def login_user(email: str, password: str) -> Dict:
         #Flujo de autenticación
+
+        errors = validate_login_data(email, password)
+
+        if errors:
+            return {
+                "success": False,
+                "message": ", ".join(errors)
+            }
 
         try:
             
